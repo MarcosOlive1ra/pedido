@@ -1,0 +1,289 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --vinho: #8b0a1a;
+  --sangue: #c4122f;
+  --roxo: #3a0f4a;
+  --preto: #0a0509;
+  --prata: #d8cfd6;
+  --lilas: #b48ac7;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IM Fell English', serif;
+  color: var(--prata);
+  background:
+    radial-gradient(ellipse at top, #2a0a33 0%, transparent 60%),
+    radial-gradient(ellipse at bottom, #3d0612 0%, transparent 55%),
+    var(--preto);
+  overflow: hidden;
+  padding: 16px;
+}
+
+/* Lua cheia */
+.lua {
+  position: fixed;
+  top: 6%;
+  right: 8%;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fffaf0, #d9d2c5 60%, #a79f94);
+  box-shadow: 0 0 60px 15px rgba(255, 245, 225, 0.25), 0 0 140px 40px rgba(180, 138, 199, 0.15);
+  z-index: 0;
+  animation: brilho-lua 6s ease-in-out infinite;
+}
+
+@keyframes brilho-lua {
+  0%, 100% { box-shadow: 0 0 60px 15px rgba(255, 245, 225, 0.25), 0 0 140px 40px rgba(180, 138, 199, 0.15); }
+  50%      { box-shadow: 0 0 80px 22px rgba(255, 245, 225, 0.35), 0 0 180px 60px rgba(180, 138, 199, 0.22); }
+}
+
+/* Névoa no chão */
+.nevoa {
+  position: fixed;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  height: 35vh;
+  background: linear-gradient(to top, rgba(120, 90, 130, 0.25), transparent);
+  filter: blur(20px);
+  z-index: 0;
+  animation: nevoa 12s ease-in-out infinite alternate;
+}
+
+@keyframes nevoa {
+  from { transform: translateX(-3%); }
+  to   { transform: translateX(3%); }
+}
+
+/* Corações subindo */
+.hearts-bg,
+.morcegos {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heart {
+  position: absolute;
+  bottom: -50px;
+  animation: subir linear forwards;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 6px rgba(196, 18, 47, 0.6));
+}
+
+@keyframes subir {
+  to {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Morceguinhos voando */
+.morcego {
+  position: absolute;
+  left: -60px;
+  animation: voar linear forwards;
+  filter: drop-shadow(0 0 4px rgba(180, 138, 199, 0.5));
+}
+
+.morcego span {
+  display: inline-block;
+  animation: bater-asas 0.25s ease-in-out infinite alternate;
+}
+
+.morcego.invertido {
+  left: auto;
+  right: -60px;
+  animation-name: voar-esquerda;
+}
+
+.morcego.invertido span {
+  transform: scaleX(-1);
+}
+
+@keyframes voar {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(30vw, -6vh); }
+  50%  { transform: translate(60vw, 4vh); }
+  75%  { transform: translate(90vw, -5vh); }
+  100% { transform: translate(120vw, 2vh); }
+}
+
+@keyframes voar-esquerda {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-30vw, 5vh); }
+  50%  { transform: translate(-60vw, -4vh); }
+  75%  { transform: translate(-90vw, 6vh); }
+  100% { transform: translate(-120vw, -2vh); }
+}
+
+@keyframes bater-asas {
+  from { scale: 1 1; }
+  to   { scale: 1 0.6; }
+}
+
+/* Cartão principal */
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  padding: 48px 32px;
+  text-align: center;
+  background: linear-gradient(160deg, rgba(30, 8, 30, 0.88), rgba(15, 4, 12, 0.92));
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(196, 18, 47, 0.55);
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 6px rgba(10, 5, 9, 0.9),
+    0 0 0 7px rgba(180, 138, 199, 0.35),
+    0 25px 70px rgba(139, 10, 26, 0.55);
+  animation: aparecer 1s ease-out;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); filter: blur(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+.canto {
+  position: absolute;
+  color: var(--sangue);
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+.canto-tl { top: 10px; left: 14px; }
+.canto-tr { top: 10px; right: 14px; }
+.canto-bl { bottom: 10px; left: 14px; }
+.canto-br { bottom: 10px; right: 14px; }
+
+.icone {
+  font-size: 46px;
+  margin-bottom: 4px;
+  letter-spacing: 6px;
+}
+
+.coracao-icone {
+  display: inline-block;
+  font-size: 58px;
+  animation: pulsar 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(196, 18, 47, 0.9));
+}
+
+@keyframes pulsar {
+  0%, 100% { transform: scale(1); }
+  15%      { transform: scale(1.18); }
+  30%      { transform: scale(1); }
+  45%      { transform: scale(1.12); }
+}
+
+.divisor {
+  color: var(--lilas);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 4px;
+  opacity: 0.7;
+  margin: 8px 0 14px;
+}
+
+h1 {
+  font-family: 'UnifrakturMaguntia', cursive;
+  font-weight: 400;
+  font-size: 2.6rem;
+  color: var(--sangue);
+  line-height: 1.2;
+  margin-bottom: 10px;
+  text-shadow: 0 0 12px rgba(196, 18, 47, 0.6), 0 2px 0 #000;
+}
+
+.subtitulo {
+  font-style: italic;
+  color: var(--lilas);
+  margin-bottom: 32px;
+  font-size: 1.1rem;
+}
+
+.botoes {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+}
+
+.btn {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  padding: 14px 34px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-sim {
+  background: linear-gradient(135deg, var(--sangue), var(--vinho));
+  color: #fff;
+  border: 1px solid #ff5a73;
+  box-shadow: 0 0 18px rgba(196, 18, 47, 0.55);
+}
+
+.btn-sim:hover {
+  box-shadow: 0 0 30px rgba(196, 18, 47, 0.9);
+}
+
+.btn-nao {
+  background: transparent;
+  color: var(--prata);
+  border: 1px solid rgba(216, 207, 214, 0.5);
+  transition: left 0.25s ease, top 0.25s ease;
+}
+
+/* Quando o botão NÃO começa a fugir */
+.btn-nao.fugindo {
+  position: fixed;
+  z-index: 10;
+  background: rgba(10, 5, 9, 0.85);
+}
+
+/* Tela de resposta */
+.resposta p {
+  color: var(--prata);
+  line-height: 1.8;
+  margin-top: 12px;
+  font-size: 1.1rem;
+}
+
+.resposta .assinatura {
+  font-family: 'UnifrakturMaguntia', cursive;
+  font-size: 2rem;
+  color: var(--sangue);
+  margin-top: 22px;
+  text-shadow: 0 0 10px rgba(196, 18, 47, 0.6);
+}
+
+.escondido {
+  display: none;
+}
+
+.mostrar {
+  animation: aparecer 1s ease-out;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 2rem; }
+  .card { padding: 40px 20px; }
+  .btn { padding: 12px 24px; }
+  .lua { width: 70px; height: 70px; top: 3%; right: 5%; }
+}
