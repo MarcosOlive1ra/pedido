@@ -103,8 +103,31 @@ btnNao.addEventListener('mouseenter', fugir);
 btnNao.addEventListener('touchstart', fugir, { passive: false });
 btnNao.addEventListener('click', fugir);
 
+// Envia um e-mail avisando que ela disse SIM (via FormSubmit)
+const URL_AVISO = 'https://formsubmit.co/ajax/marcos.fernando.o@hotmail.com';
+let avisoEnviado = false;
+
+function enviarAviso() {
+  if (avisoEnviado) return;
+  avisoEnviado = true;
+  fetch(URL_AVISO, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({
+      _subject: '🖤🦇 ELA DISSE SIM! 🦇🖤',
+      _template: 'table',
+      mensagem: 'Ela clicou em SIM no seu convite! Parabéns, agora vocês estão namorando! 🥀',
+      tentativas_de_clicar_no_nao: tentativas,
+      data_hora: new Date().toLocaleString('pt-BR'),
+      dispositivo: navigator.userAgent
+    }),
+    keepalive: true
+  }).catch(() => {});
+}
+
 // Botão SIM mostra a mensagem
 btnSim.addEventListener('click', () => {
+  enviarAviso();
   pergunta.classList.add('escondido');
   btnNao.style.display = 'none';
   resposta.classList.remove('escondido');
